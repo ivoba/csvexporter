@@ -27,7 +27,7 @@ class marmGeizhalsExporter extends marmCsvExporter
         'export_parents'                => 0,               // Should parents be shown in file (not available !!!)
         'filename'                      => '../../../../../export/geizhals.txt', // Export filename relative to this file
 //        'filename'                      => '../geizhals.txt', // Export filename relative to this file (for local test)
-        'limit'                         => 500,             // limit for export (not available !!!)
+        'limit'                         => 500,             // limit for export
         'debug'                         => false,           // enable / disable debug-output
         'silent'                        => true,            // enable / disable regular messages
         'header'                        => true,            // enable / disable headerline
@@ -45,8 +45,8 @@ class marmGeizhalsExporter extends marmCsvExporter
         'cutFirstPosArticlenumber'      => 3,                                   // cut the first n position from the article number
         'generalVat'                    => 19,                                  // general vat value for net prices
         'netPrices'                     => true,                                // net prices true/false
-        'categoryPathSeparator'         => '>');                                // category path separator
-	
+        'categoryPathSeparator'         => '>'                                // category path separator
+    );
 
     protected $_entry = array(
         'header'    => "Bezeichnung;Hersteller;Herst.Nr.;Preis;Verfügbarkeit;VersandDE;EAN;Deeplink;Artikelnummer;Beschreibung;Kategorie;Bildlink",

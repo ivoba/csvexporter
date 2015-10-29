@@ -1,7 +1,7 @@
 CSV Exporter
 ============
 
-Eine Sammlung von Skripten, die über einen Cronjob Shop-Produkte in eine CSV-Datei exportiert.
+Eine Sammlung von Skripten, die Ã¼ber einen Cronjob Shop-Produkte in eine CSV-Datei exportiert.
 
 Installieren und Konfigurieren
 ------------------------------
@@ -10,16 +10,16 @@ Installieren und Konfigurieren
           modules/marm/csvexporter
 
 2.  Konfigurieren, erweitern oder schreiben Sie neue Exporter. 
-Einige Exporter sind bereits enthalten. An diesen können Sie sich orentieren.
+Einige Exporter sind bereits enthalten. An diesen kÃ¶nnen Sie sich orentieren.
 Die Exporter liegen im Verzeichnis `exporter`.
 
-3.  Nun können Sie Ihre Exportscripte aufrufen und die CSV-Datei erstellen. 
-Dies können Sie entweder manuell durchführen oder über einen Cronjob automatisieren.
+3.  Nun kÃ¶nnen Sie Ihre Exportscripte aufrufen und die CSV-Datei erstellen. 
+Dies kÃ¶nnen Sie entweder manuell durchfÃ¼hren oder Ã¼ber einen Cronjob automatisieren.
 Der Aufruf lautet: 
 
         shopurl.de/modules/marm/csvexporter/exporter/IHR-EXPORTER/IHR-EXPORTER.php
 
-4.  Schon fertig. Sie können nun Ihre CSV-Datei an die Preisportale melden.
+4.  Schon fertig. Sie kÃ¶nnen nun Ihre CSV-Datei an die Preisportale melden.
 
 
 Hinweise
@@ -40,36 +40,37 @@ Grundkonfiguration
 
 Im oberen Bereich Ihres Exporterscripts finden Sie die Konfiguration. 
 Diese ist in der Variablen `$_config` als Array hinterlegt.
-Folgende Optionen stehen Ihnen zur Verfügung.
+Folgende Optionen stehen Ihnen zur VerfÃ¼gung.
 
         'export_parents'                => Anzeigen von Eltern Produkten in der CSV-Datei
         'filename'                      => Pfad und Dateiname
-        'limit'                         => Limit für Export
-        'debug'                         => debug Option An/Aus, für Entwickler
-        'silent'                        => debug Ausgaben An/Aus, für Entwickler
+        'limit'                         => Limit fÃ¼r Export
+        'debug'                         => debug Option An/Aus, fÃ¼r Entwickler
+        'silent'                        => debug Ausgaben An/Aus, fÃ¼r Entwickler
         'header'                        => Kopfzeile An/Aus
-        'langid'                        => Sprachid, für welche Sprache Exportiert werden soll
+        'langid'                        => Sprachid, fÃ¼r welche Sprache Exportiert werden soll
         'shippingcost'                  => Versand Optionen      
-        'productLinkPrefix'             => Standard Produkt URL Präfix
+        'productLinkPrefix'             => Standard Produkt URL PrÃ¤fix
         'geizhalsProductLinkParameters' => Exporter spezifischer Produkt Parameter    
         'imageurl'                      => Pfad der zu Exportierenden Produkt Bilder
         'inStock'                       => Ausgabe, wenn Produkt Lageberstand hat
         'outOfStock'                    => Ausgabe, wenn Produkt kein Lagerbestand hat      
         'cutFirstPosArticlenumber'      => Die ersten x Zeichen der Artikelnummer abschneiden
-        'generalVat'                    => MwSt für die Nettopreise
+        'generalVat'                    => MwSt fÃ¼r die Nettopreise
         'netPrices'                     => Nettopreise An/Aus
-        'categoryPathSeparator'         => Trennzeichen für die Kategoriepfade
+        'categoryPathSeparator'         => Trennzeichen fÃ¼r die Kategoriepfade
+        'quote'                         => Felder in AnfÃ¼hrungszeichen true/false
 
 CSV-Konfiguration
 -----------------
 
 Nun geht es darum, die Ausgabe der Daten zu steuern.
-In der Variablen `$_entry` werden die Felder, die Sie exportieren möchten, angegeben.
+In der Variablen `$_entry` werden die Felder, die Sie exportieren mÃ¶chten, angegeben.
 
-Das Array enthält folgende Optionen.
+Das Array enthÃ¤lt folgende Optionen.
 
-        'header'    => Spalten Namen für die CSV-Datei.
-        'fields'    => Spalten Inhalte für die CSV-Datei.
+        'header'    => Spalten Namen fÃ¼r die CSV-Datei.
+        'fields'    => Spalten Inhalte fÃ¼r die CSV-Datei.
         'separator' => Trennzeichen der CSV-Datei.
 
 Hier noch einige Tipps:
@@ -80,27 +81,27 @@ Hier noch einige Tipps:
 
 - Die Spalteninhalte werden in Markern `#IHRER MARKER#` geschrieben und mit `|` getrennt.
 
-- Man kann Marker miteinander verknüpft in einem Datensatz ausgeben, die werden mit `+` geschrieben.
+- Man kann Marker miteinander verknÃ¼pft in einem Datensatz ausgeben, die werden mit `+` geschrieben.
 Das sieht dann so aus: `#Marker 1#+#Marker 2#`.
 
-- Oder man möchte einen Fallback haben, dann werden die Marker mit ein `/` geschrieben.
+- Oder man mÃ¶chte einen Fallback haben, dann werden die Marker mit ein `/` geschrieben.
 Das bedeutet wenn `#Marker 1#` leer ist wird `#Marker 2#` ausgegeben.
 Das sieht dann so aus: `#Marker 1#/#Marker 2#`.
 
-- Die Operatoren können gemischt werden und einen Spalteninhalt erstellen der aus Fallback und Verknüpfung besteht.
+- Die Operatoren kÃ¶nnen gemischt werden und einen Spalteninhalt erstellen der aus Fallback und VerknÃ¼pfung besteht.
 zB. `#Marker 1#/#Marker 2#+#Marker 3#`, hier wird entweder Marker 1 oder Marker 2 mit Marker 3 ausgegeben.
 
 Eigene Konfigurationen
 ----------------------
 
-Im unteren Bereich Ihres Exporterscripts können Sie nun eigene Funktionen schreiben.
-Alle Funktionen aus der **marmCsvExporter.php** können überschrieben und erweitert werden.
+Im unteren Bereich Ihres Exporterscripts kÃ¶nnen Sie nun eigene Funktionen schreiben.
+Alle Funktionen aus der **marmCsvExporter.php** kÃ¶nnen Ã¼berschrieben und erweitert werden.
 
-Eine nicht vorhandene Spalte hinzufügen, aber wie?
+Eine nicht vorhandene Spalte hinzufÃ¼gen, aber wie?
 
 Bsp.: Wir wollen das Attribut **Farbe** der einzelnen Variantenprodukte in die CSV-Datei exportiert haben.
 
 Dazu schreiben wir im `header` den neuen Spaltennamen `Farbe`. In das Feld `fields` kommt ein neuer Marker namens `#color#`.
-Diesen Marker müssen wir nun dynamisch befüllen. Marker werden in der Funktion `getDataByMarker($marker)` definiert, diese müssen wir erweitern.
-Hier bekommt der Marker einen eigenen Funktionsaufruf. Danach können wir die eigentliche Funktion in unserem Exporterscript schreiben,
+Diesen Marker mÃ¼ssen wir nun dynamisch befÃ¼llen. Marker werden in der Funktion `getDataByMarker($marker)` definiert, diese mÃ¼ssen wir erweitern.
+Hier bekommt der Marker einen eigenen Funktionsaufruf. Danach kÃ¶nnen wir die eigentliche Funktion in unserem Exporterscript schreiben,
 die die Farbe der Produkte ausliest. Als Beispiel sehen Sie sich Die Funktion `getSeoUrl()` in den mitgelieferten Exportern von Geizhals oder Google.

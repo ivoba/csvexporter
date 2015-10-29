@@ -28,7 +28,7 @@ class marmPreisroboterExporter extends marmCsvExporter
         'export_parents'                => 0,               // Should parents be shown in file (not available !!!)
         'filename'                      => '../../../../../export/prex-05848170643ab0deb9914566391c0c63.txt',  // Export filename relative to this file
 //        'filename'                      => '../preisroboter.txt', // Export filename relative to this file (for local test)
-        'limit'                         => 500,             // limit for export (not available !!!)
+        'limit'                         => 500,             // limit for export
         'debug'                         => false,           // enable / disable debug-output
         'silent'                        => false,            // enable / disable regular messages
         'header'                        => true,            // enable / disable headerline
@@ -46,8 +46,9 @@ class marmPreisroboterExporter extends marmCsvExporter
         'cutFirstPosArticlenumber'      => 0,                                   // cut the first n position from the article number
         'generalVat'                    => 19,                                  // general vat value for net prices
         'netPrices'                     => false,                                // net prices true/false
-        'categoryPathSeparator'         => '>');                                // category path separator
-	
+        'categoryPathSeparator'         => '>'                                // category path separator
+    );
+
 
     protected $_entry = array(
         'header'    => "Artikelnummer;Artikelname;Produktbeschreibung;Preis;Bildlink;Deeplink;Verfügbarkeit;Versandkosten;Hersteller;EAN;Grundpreis;Kategorie;Hersteller.Art.Nr.;PZN;Produktfarbe;Größe;UVP;VE",

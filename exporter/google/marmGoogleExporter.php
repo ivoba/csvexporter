@@ -28,7 +28,7 @@ class marmGoogleExporter extends marmCsvExporter
         'filename'                      => '../../../../../export/ggex-6b66d82af984e5ad46b9cb27b1ef8aae.txt', // Export filename relative to this file
 //        'filename'                      => '../../../../../export/google.txt', // Export filename relative to this file
 //        'filename'                      => '../google.txt', // Export filename relative to this file (for local test)
-        'limit'                         => 500,             // limit for export !!!not available
+        'limit'                         => 500,             // limit for export
         'debug'                         => false,           // enable / disable debug-output
         'silent'                        => false,            // enable / disable regular messages
         'header'                        => true,            // enable / disable headerline
@@ -44,11 +44,11 @@ class marmGoogleExporter extends marmCsvExporter
                                             array('from' => 50 , 'cost' => 4.90)
                                             ),/**/
         'productLinkPrefix'             => '/index.php?cl=details&anid=',       //standard product url prefix
-        'googleProductLinkParameters'   => 'utm_source=google&utm_medium=mc&utm_campaign=gshopping', //google parameters for product        
+        'googleProductLinkParameters'   => 'utm_source=google&utm_medium=mc&utm_campaign=gshopping', //google parameters for product
         'imageurl'                      => '/out/pictures/generated/product/1/290_290_95/', //standard image url path
         'condition'                     => 'neu',                               //condition always new product
         'inStock'                       => 'auf Lager',                         //product in stock description
-        'outOfStock'                    => 'nicht auf Lager',                   //product out of stock description       
+        'outOfStock'                    => 'nicht auf Lager',                   //product out of stock description
         'cutFirstPosArticlenumber'      => 0,                                   // cut the first n position from the article number
         'generalVat'                    => 19,                                  // general vat value for net prices
         'netPrices'                     => true,                                // net prices true/false
@@ -61,10 +61,12 @@ class marmGoogleExporter extends marmCsvExporter
         //'fields'    => '#oxean#/#mpn#/#ERROR#|#oxtitle#+#oxvarselect#|#oxshortdesc#/#oxlongdesc#|#categoryPath#|#google_categoryPath#|#seo_url_parent#|#imagelink#|#condition#|#availability#|#oxprice#|#brand#|#oxdistean#/#oxean#|#mpn#|#shippingcost#',
         'separator' => '~'
     );
-    
+
     /**
      * google specific
      * Calls the method from marmCsvExporter and replaces the value
+     *
+     * @param string $sCountryId
      * @return string
      */
     public function getShippingcost($sCountryId = 'de')
@@ -76,27 +78,27 @@ class marmGoogleExporter extends marmCsvExporter
         $shippingcost .= ',';
         //$shippingcost .= parent::getShippingcost('at');
         $shippingcost .= 'AT:::'.parent::getShippingcost('at');
-        
+
         return $shippingcost;
     }
 
     /**
      * google specific
      * Calls the method from marmCsvExporter and replaces the value
-     * 
+     *
      * get seo url
-     * 
+     *
      * @param boolean only parent
      * @return string
-     */ 
+     */
     public function getSeoUrl($onlyParent = false)
     {
         $sUrl = parent::getSeoUrl($onlyParent);
-        
+
         if (isset($this->_config['googleProductLinkParameters']))
         {
             $pos = strpos($sUrl, '?');
-            
+
             if ($pos === false)
             {
                 $sUrl .= '?'.$this->_config['googleProductLinkParameters'];
@@ -106,10 +108,10 @@ class marmGoogleExporter extends marmCsvExporter
                 $sUrl .= '&'.$this->_config['googleProductLinkParameters'];
             }
         }
-        
+
         return $sUrl;
-    }    
-    
+    }
+
 }
 $marmGoogleExporter = new marmGoogleExporter();
 $marmGoogleExporter->start_export();

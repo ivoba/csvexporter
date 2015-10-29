@@ -89,12 +89,14 @@ class marmCsvExporter
     //retrieve the children and print them.
     public function handleParents($parents)
     {
+        $i = 0;
         foreach($parents as $parent)
         {
             //check if is single (OXVARNAME is filled for parent with childs)
             if($parent['OXVARNAME'] == '')
             {
                 $this->writeEntryToFile($parent);
+                $i++;
             }
             else
             {
@@ -107,12 +109,19 @@ class marmCsvExporter
                     foreach($children as $child)
                     {
                        $this->writeEntryToFile($child);
+                        $i++;
                     }
                 }
             }
             if (isset($this->tempParent)) unset($this->tempParent); 
             if (isset($this->tempMainCategoryId)) unset($this->tempMainCategoryId);
-        }		
+
+            if(is_numeric($this->_config['limit'])){
+                if($i >= $this->_config['limit']){
+                    break;
+                }
+            }
+        }
     }
     
     /**
@@ -159,7 +168,7 @@ class marmCsvExporter
             case '#oxid#':
                 return $this->tempProduct['OXID'];
             case '#oxshortdesc#':
-		return $this->getShortDescription();
+                return $this->getShortDescription();
             case '#oxlongdesc#':
                 return $this->exchOxContent($this->getLongDescription());
             case '#categoryPath#':
@@ -212,9 +221,9 @@ class marmCsvExporter
                         $unitMeasure = 'm³';
                         break;
                     default:
-                        $returnValue = preg_match('/[0-9]*/', $this->tempProduct['OXUNITNAME'], $matches, PREG_OFFSET_CAPTURE);
+                        preg_match('/[0-9]*/', $this->tempProduct['OXUNITNAME'], $matches, PREG_OFFSET_CAPTURE);
                         $amount = $this->tempProduct['OXUNITQUANTITY'] * $matches[0][0];
-                        $returnValue = preg_match('/[^0-9 ].*/', $this->tempProduct['OXUNITNAME'], $matches, PREG_OFFSET_CAPTURE);
+                        preg_match('/[^0-9 ].*/', $this->tempProduct['OXUNITNAME'], $matches, PREG_OFFSET_CAPTURE);
                         $unitMeasure = $matches[0][0];
                         break;
                 }
@@ -290,13 +299,12 @@ class marmCsvExporter
     
     /**
      * replace the values from the template and write article to file
+     *
      * @param string oxid
      * @return void
      */
     public function writeEntryToFile($oxarticle)
     {
-        $col=0;
-        $conc=0;
         $fb=0;
         $this->tempProduct = $oxarticle; //to get values for the markers
         $dataarray = $this->entryFields;
@@ -372,7 +380,7 @@ class marmCsvExporter
                 // caching query
                 $this->tempMainCategoryId[$oxid] = $row['oxcatnid'];
                 return $row['oxcatnid'];
-            }	
+            }
         }
         // caching query
         $this->tempMainCategoryId[$oxid] = '';
@@ -384,7 +392,7 @@ class marmCsvExporter
      * @return string
      */
     public function getCategoryPath()
-    {		
+    {
         $path = array();
         
         // check tempProduct (it can be a parent or child product)
@@ -471,9 +479,11 @@ class marmCsvExporter
         }
         $this->googleCategoriesTitle = $googleCategories;
     }
-	
+
     /**
      * Get the shipping cost
+     *
+     * @param string $sCountryId
      * @return string
      */
     public function getShippingcost($sCountryId = 'de')
@@ -509,9 +519,11 @@ class marmCsvExporter
         
         return (string) $shippingcost[$arraymarker]['cost'];
     }
-	
+
     /**
      * Get an Attribute
+     *
+     * @param $attr
      * @return string
      */
     public function getAttribute($attr)
@@ -536,7 +548,7 @@ class marmCsvExporter
                     {
                         return $row['OXVALUE'];
                     }
-                }	
+                }
             }
             
             // check parent
@@ -557,7 +569,7 @@ class marmCsvExporter
                         {
                             return $row['OXVALUE'];
                         }                   
-                    }	
+                    }
                 }                
             }
         }
@@ -628,11 +640,12 @@ class marmCsvExporter
         }
         return $parentProducts;
     }
-    
+
     /**
      * Selects the basic entries (oxarticles + oxartextends) from the database
-     * 
-     * @return array with products
+     *
+     * @param $parentid
+     * @return array|null
      */
     public function getChildren($parentid)
     {
@@ -645,7 +658,7 @@ class marmCsvExporter
                  FROM oxarticles oxart LEFT JOIN oxartextends oxartex ON (oxart.oxid = oxartex.oxid)
                  WHERE oxart.oxactive = 1 AND
                  oxart.oxparentid = '".$parentid."'";
-		
+
         $rs = mysql_query($query);
         if ($rs)
         {
@@ -660,11 +673,11 @@ class marmCsvExporter
         }
         return $childrenProducts;
     }
-    
-     /**
+
+    /**
      * Replaces the placeholders of a single product
-     * 
-     * @return void
+     *
+     * @return mixed
      */
     public function getCondition()
     {
@@ -675,7 +688,7 @@ class marmCsvExporter
     /**
      * Replaces the placeholders of a single product
      * 
-     * @return void
+     * @return mixed
      */
     public function getImageLink()
     {        
@@ -778,11 +791,12 @@ class marmCsvExporter
         
         return '';
     }
-    
+
     /**
      * get content page text
-     * 
-     * @return string
+     *
+     * @param $ident
+     * @return mixed
      */
     public function getContentPageText($ident)
     {
@@ -796,7 +810,7 @@ class marmCsvExporter
      */
     public function cacheCategoriesTitles()
     {
-	$categories = array();
+        $categories = array();
         $query="SELECT OXID, OXTITLE, OXPARENTID FROM oxcategories";
         $rs = mysql_query($query);
         if ($rs)
@@ -1021,11 +1035,12 @@ class marmCsvExporter
         print_r($this->tempProduct['OXTPRICE']);
         return $uvp;
     }
-    
+
     /**
      * exchange [{ oxcontent ident="..." }] in long description
-     * 
-     * @return string
+     *
+     * @param $description
+     * @return mixed
      */
     public function exchOxContent($description)
     {

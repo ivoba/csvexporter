@@ -51,6 +51,7 @@ in the protected variable `$ _config`
         'generalVat'                    => general vat value for net prices
         'netPrices'                     => net prices true/false
         'categoryPathSeparator'         => category path separator
+        'quote'                         => fields in quotes true/false
 
 CSV configurations
 ------------------
@@ -90,10 +91,10 @@ in the protected variable `$ _Entry`
 
 - In `fields` comes a new marker `#color#`.
 
-- Now has the `getDataByMarker($marker)` from the **marmCsvExporter.php** be extended in our exporter to a marker.
+- Now has the `getDataByMarker($marker)` from the **marmCsvExporter.php**ï¿½be extended in our exporter to a marker.
 
 - The new marker we give a new function.
 
-- And finally we actually function in our exporter written reads out the color of the variants products and passes the marker.
+- And finally we actually function in our exporter writtenï¿½reads out the color of the variants products and passes the marker.
 
 
